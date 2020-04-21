@@ -6,60 +6,47 @@ import { LatestNewsComponent } from './latest-news/latest-news.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LogoutComponent } from './logout/logout.component';
 import { AddNewsComponent } from './add-news/add-news.component';
-import { LoginService } from './services/login/user/login.service';
 import { AdminLoginService } from './services/login/admin/admin-login.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
-    canActivate: [LoginService]
+    redirectTo: 'dashboard',
+    pathMatch: 'full'
   },
   {
     path: 'login',
     component: LoginComponent,
-    pathMatch: 'full',
-    canActivate: [LoginService]
+    pathMatch: 'full'
   },
   {
     path: 'logout',
     component: LogoutComponent,
-    pathMatch: 'full',
-    canActivate: [LoginService]
+    pathMatch: 'full'
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
-    pathMatch: 'full',
-    canActivate: [LoginService]
+    pathMatch: 'full'
   },
   {
     path: 'news',
     component: LatestNewsComponent,
     pathMatch: 'full',
-    canActivate: [LoginService]
+    canActivateChild: [AdminLoginService],
+    children: [
+      {
+        path: 'add',
+        component: AddNewsComponent,
+        pathMatch: 'full'
+      }
+    ]
   },
   {
     path: 'precautions',
     component: PrecautionsComponent,
-    pathMatch: 'full',
-    canActivate: [LoginService]
-  },
-  {
-    path: 'add',
-    component: PrecautionsComponent,
-    pathMatch: 'full',
-    canActivate: [LoginService],
-    children: [
-      {
-        path: 'news',
-        component: AddNewsComponent,
-        pathMatch: 'full',
-        canActivate: [AdminLoginService]
-      }
-    ]
+    pathMatch: 'full'
   },
   {
     path: '**',

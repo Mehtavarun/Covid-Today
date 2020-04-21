@@ -6,10 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./title-bar.component.css']
 })
 export class TitleBarComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
