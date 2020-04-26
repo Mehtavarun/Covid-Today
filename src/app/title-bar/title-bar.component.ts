@@ -6,7 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./title-bar.component.css']
 })
 export class TitleBarComponent implements OnInit {
+  isLoggedIn: boolean;
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isLoggedIn = true;
+  }
 }

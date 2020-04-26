@@ -1,1 +1,12 @@
-<app-title-bar></app-title-bar> Precautions
+<app-title-bar></app-title-bar>
+<div class="container mt-5">
+  <div class="card mb-3" style="max-width: 36rem;">
+    <div class="card-header">PRECAUTIONS</div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item" *ngFor="let precaution of precautions">
+        {{ precaution.precaution }}
+      </li>
+    </ul>
+  </div>
+</div>
+<app-loader></app-loader>

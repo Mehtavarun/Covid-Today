@@ -1,9 +1,12 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" routerLink="/dashboard" routerLinkActive="active"
+  <a
+    class="navbar-brand mg-10"
+    routerLink="/dashboard"
+    routerLinkActive="active"
     >COVID TODAY</a
   >
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-auto ml-3">
       <li class="nav-item">
         <a class="nav-link" routerLink="/dashboard" routerLinkActive="active"
           >Dashboard
@@ -19,6 +22,29 @@
           >Precautions</a
         >
       </li>
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a class="nav-link" routerLink="/add" routerLinkActive="active"
+          >Add News</a
+        >
+      </li>
     </ul>
+    <button
+      class="btn btn-outline-info my-2 my-sm-0 mr-4"
+      routerLink="/login"
+      *ngIf="!isLoggedIn; else logoutBlock"
+    >
+      Login
+    </button>
+    <ng-template #logoutBlock>
+      <h3 class="text-monospace font-weight-normal my-2 my-sm-0 mr-4">
+        Admin
+      </h3>
+      <button
+        class="btn btn-outline-info my-2 my-sm-0 mr-4"
+        routerLink="/logout"
+      >
+        logout
+      </button>
+    </ng-template>
   </div>
 </nav>
