@@ -1,1 +1,118 @@
-<p>add-news works!</p>
+<app-title-bar></app-title-bar>
+<div class="container add-news-container">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 add-news-form">
+      <h3>ADD NEWS</h3>
+      <form [formGroup]="addNewsForm" (ngSubmit)="addNews()">
+        <div class="form-group">
+          <input
+            formControlName="newsTitle"
+            type="text"
+            class="form-control"
+            placeholder="Title"
+            name="newsTitle"
+            value=""
+            autofocus
+            aria-describedby="newsTitleErr"
+            required
+          />
+          <div
+            *ngIf="
+              formControls.newsTitle.invalid &&
+                (formControls.newsTitle.dirty ||
+                  formControls.newsTitle.touched);
+              then newsTitleErrMsg
+            "
+          ></div>
+          <ng-template #newsTitleErrMsg>
+            <small
+              id="newsTitleErr"
+              class="form-text text-warning"
+              *ngIf="formControls.newsTitle.errors.required"
+              >*Required</small
+            ><small
+              id="newsTitleErr"
+              class="form-text text-warning"
+              *ngIf="formControls.newsTitle.errors.maxlength"
+              >Title cannot be more than 15 characters</small
+            ></ng-template
+          >
+        </div>
+        <div class="form-group">
+          <input
+            formControlName="summary"
+            type="summary"
+            class="form-control"
+            placeholder="Summary"
+            name="summary"
+            value=""
+            aria-describedby="summaryErr"
+          />
+          <small
+            id="summaryErr"
+            *ngIf="
+              formControls.summary.invalid &&
+              (formControls.summary.dirty || formControls.summary.touched) &&
+              formControls.summary.errors.maxlength
+            "
+            class="form-text text-warning"
+            >*Summary should be less than 40 characters
+          </small>
+        </div>
+        <div class="form-group">
+          <input
+            formControlName="description"
+            type="description"
+            class="form-control"
+            placeholder="Description"
+            name="description"
+            value=""
+            aria-describedby="descriptionErr"
+            required
+          />
+          <div
+            *ngIf="
+              formControls.description.invalid &&
+                (formControls.description.dirty ||
+                  formControls.description.touched);
+              then descriptionErrMsg
+            "
+          ></div>
+          <ng-template #descriptionErrMsg>
+            <small
+              id="descriptionErr"
+              class="form-text text-warning"
+              *ngIf="formControls.description.errors.required"
+              >*Required description</small
+            ><small
+              id="descriptionErr"
+              class="form-text text-warning"
+              *ngIf="formControls.description.errors.maxlength"
+              >Description cannot be more than 150 characters</small
+            ></ng-template
+          >
+        </div>
+        <div class="form-group">
+          <input
+            formControlName="fullNews"
+            type="fullNews"
+            class="form-control"
+            placeholder="fullNews"
+            name="Full News Details"
+            value=""
+            aria-describedby="fullNewsErr"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="submit"
+            class="btnSubmit"
+            value="Add"
+            [disabled]="!addNewsForm.valid"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

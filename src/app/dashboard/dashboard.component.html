@@ -1,1 +1,74 @@
 <app-title-bar></app-title-bar>
+<div class="container">
+  <div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+      <form
+        class="form-inline my-2 my-lg-0"
+        [formGroup]="searchForm"
+        (ngSubmit)="search()"
+      >
+        <input
+          class="form-control mr-lg-2"
+          style="width: 400px;"
+          type="search"
+          (keyup)="search()"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+          Search
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="row" *ngFor="let stateDetails of filteredStateList">
+    <ng-container *ngIf="stateDetails.state !== 'Total'">
+      <div class="col-3">
+        <div class="card text-center border-0">
+          <div class="card-body border-0">
+            <h3 class="card-title">{{ stateDetails.state }}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <ul class="list-group">
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+          >
+            TOTAL CASES REPORTED
+            <span class="badge badge-primary badge-pill">{{
+              +(+stateDetails.active) +
+                +stateDetails.confirmed +
+                +stateDetails.deaths
+            }}</span>
+          </li>
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+          >
+            ACTIVE
+            <span class="badge badge-primary badge-pill">{{
+              stateDetails.active
+            }}</span>
+          </li>
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+          >
+            RECOVERED
+            <span class="badge badge-primary badge-pill">{{
+              stateDetails.recovered
+            }}</span>
+          </li>
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+          >
+            DECEASED
+            <span class="badge badge-primary badge-pill">{{
+              stateDetails.deaths
+            }}</span>
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+  </div>
+</div>
