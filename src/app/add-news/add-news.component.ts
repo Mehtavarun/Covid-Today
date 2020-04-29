@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NewsService } from '../services/news/news.service';
 import { INews } from '../models/news';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-news',
@@ -15,7 +16,8 @@ export class AddNewsComponent implements OnInit {
   constructor(
     private toastr: ToastrService,
     private fb: FormBuilder,
-    private newService: NewsService
+    private newService: NewsService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -34,10 +36,10 @@ export class AddNewsComponent implements OnInit {
   showSuccessToastr() {
     this.toastr
       .success('News has been added', 'Success!', {
-        timeOut: 2000
+        timeOut: 1500
       })
       .onHidden.subscribe(() => {
-        this.addNewsForm.reset();
+        this.router.navigate(['news']);
       });
   }
 

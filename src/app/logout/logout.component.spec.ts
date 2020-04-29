@@ -1,6 +1,13 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  inject
+} from '@angular/core/testing';
 
 import { LogoutComponent } from './logout.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 
 describe('LogoutComponent', () => {
   let component: LogoutComponent;
@@ -8,9 +15,9 @@ describe('LogoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LogoutComponent ]
-    })
-    .compileComponents();
+      declarations: [LogoutComponent],
+      imports: [RouterTestingModule]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -22,4 +29,13 @@ describe('LogoutComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should navigate to dashboard after logout', inject(
+    [Router],
+    (router: Router) => {
+      spyOn(router, 'navigate').and.stub();
+      component.ngOnInit();
+      expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
+    }
+  ));
 });

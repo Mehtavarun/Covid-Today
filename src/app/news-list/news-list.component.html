@@ -1,0 +1,39 @@
+<app-title-bar></app-title-bar>
+<div class="container mt-4">
+  <div
+    class="card mb-3"
+    *ngFor="let news of newsList; index as i"
+    style="width: 56rem;"
+  >
+    <h4 class="card-header">{{ news.newsTitle }}</h4>
+    <div class="card-body">
+      <h5 class="card-title  text-dark">{{ news.summary }}</h5>
+      <p class="card-text">{{ news.description }}</p>
+      <ng-template
+        class="card-text"
+        *ngIf="showFullNews[i]; then collapseBtn; else expandBtn"
+      ></ng-template>
+      <ng-template #expandBtn>
+        <button
+          type="button"
+          class="btn btn-outline-info btn-lg btn-block"
+          (click)="showHideFullNews(i)"
+        >
+          EXPAND
+        </button>
+      </ng-template>
+      <ng-template #collapseBtn>
+        <p class="card-text">
+          {{ news.fullNews }}
+        </p>
+        <button
+          type="button"
+          class="btn btn-outline-info btn-lg btn-block"
+          (click)="showHideFullNews(i)"
+        >
+          COLLAPSE
+        </button>
+      </ng-template>
+    </div>
+  </div>
+</div>

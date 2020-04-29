@@ -5,28 +5,29 @@ import {
   getTestBed
 } from '@angular/core/testing';
 
-import { DashboardComponent } from './dashboard.component';
-import { Observable, of } from 'rxjs';
-import { DashboardService } from '../services/dashboard/dashboard.service';
+import { CityDetailsComponent } from './city-details.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { DashboardService } from '../services/dashboard/dashboard.service';
+import { of, Observable } from 'rxjs';
 
-describe('DashboardComponent', () => {
-  let component: DashboardComponent;
-  let fixture: ComponentFixture<DashboardComponent>;
+describe('CityDetailsComponent', () => {
+  let component: CityDetailsComponent;
+  let fixture: ComponentFixture<CityDetailsComponent>;
   let service: DashboardService;
   let injector: TestBed;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DashboardComponent],
-      imports: [HttpClientTestingModule]
+      declarations: [CityDetailsComponent],
+      imports: [HttpClientTestingModule, RouterTestingModule]
     }).compileComponents();
     injector = getTestBed();
     service = injector.get(DashboardService);
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardComponent);
+    fixture = TestBed.createComponent(CityDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -36,7 +37,7 @@ describe('DashboardComponent', () => {
   });
 
   it('should on init be called', () => {
-    spyOn<any>(component, 'getStateDetails');
+    spyOn<any>(component, 'getCityDetails');
     component.ngOnInit();
     expect(component).toBeTruthy();
   });
@@ -48,7 +49,8 @@ describe('DashboardComponent', () => {
     states$.subscribe(states => {
       expect(states).toEqual(data);
     });
-    spyOn(service, 'getStateCovidDetails').and.returnValue(of(data));
-    component.getStateDetails();
+    spyOn(service, 'getCityCovidDetails').and.returnValue(of(data));
+    component.getCityDetails();
+    expect(service.getCityCovidDetails).toHaveBeenCalled();
   });
 });
