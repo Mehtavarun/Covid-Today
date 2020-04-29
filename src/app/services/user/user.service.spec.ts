@@ -28,7 +28,7 @@ describe('UserService', () => {
       expect(res).toEqual(user);
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/api/^user$');
+    const req = httpMock.expectOne('http://localhost:8080/api/users?username=^user$');
     expect(req.request.method).toBe('GET');
     req.flush(user);
   });
