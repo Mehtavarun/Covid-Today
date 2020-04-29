@@ -13,8 +13,8 @@ export class DataService implements InMemoryDbService {
       {
         id: 1,
         newsTitle: 'Corona initiates',
-        summary: '',
-        description: 'this is disasterous',
+        summary: 'Situation is out of hands',
+        description: 'corona is disasterous and should start taking measures',
         fullNews: 'we should start taking measures'
       }
     ];

@@ -13,4 +13,8 @@ describe('DataService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should return object', () => {
+    expect(service.createDb().precautions.length).toBe(7);
+  });
 });

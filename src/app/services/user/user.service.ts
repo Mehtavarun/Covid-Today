@@ -9,6 +9,7 @@ export class UserService {
   constructor(private httpClient: HttpClient) {}
 
   public getUserByUsername(username) {
-    return this.httpClient.get(`${env.webApiUrl}/users?${username}`);
+    //regex to match exact string
+    return this.httpClient.get(`${env.webApiUrl}/users?username=^${username}$`);
   }
 }

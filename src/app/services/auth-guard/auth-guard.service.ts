@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import {
+  CanActivate,
+  Router,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot
+} from '@angular/router';
 import { AdminLoginService } from '../login/admin/admin-login.service';
 
 @Injectable({
@@ -10,9 +15,19 @@ export class AuthGuardService implements CanActivate {
     private adminLoginService: AdminLoginService,
     private router: Router
   ) {}
-  canActivate() {
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean {
+    return this.isUserLoggedIn(state);
+  }
+
+  private isUserLoggedIn(state: RouterStateSnapshot) {
     if (!this.adminLoginService.isLoggedIn()) {
-      // this.router.navigate(['/login']);
+      this.router.navigate(['login'], {
+        queryParams: { returnUrl: state.url }
+      });
     }
     return true;
   }

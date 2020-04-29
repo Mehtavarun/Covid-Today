@@ -4,11 +4,12 @@ import { LoginComponent } from './login/login.component';
 import { PrecautionsComponent } from './precautions/precautions.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LogoutComponent } from './logout/logout.component';
-import { AdminLoginService } from './services/login/admin/admin-login.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LatestNewsComponent } from './latest-news/latest-news.component';
 import { AddNewsComponent } from './add-news/add-news.component';
 import { AuthGuardService } from './services/auth-guard/auth-guard.service';
+import { CityDetailsComponent } from './city-details/city-details.component';
+import { NewsListComponent } from './news-list/news-list.component';
 
 const routes: Routes = [
   {
@@ -32,25 +33,27 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'state/:state',
+    component: CityDetailsComponent,
+    pathMatch: 'full'
+  },
+  {
     path: 'precautions',
     component: PrecautionsComponent,
     pathMatch: 'full'
   },
   {
-    path: 'add',
-    component: AddNewsComponent,
-    pathMatch: 'full',
-    canActivate: [AuthGuardService]
-  },
-  {
     path: 'news',
     component: LatestNewsComponent,
-    pathMatch: 'full',
-    canActivateChild: [AuthGuardService],
     children: [
       {
+        path: '',
+        component: NewsListComponent
+      },
+      {
         path: 'add',
-        component: AddNewsComponent
+        component: AddNewsComponent,
+        canActivate: [AuthGuardService]
       }
     ]
   },
@@ -62,7 +65,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
