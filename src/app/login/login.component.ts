@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AdminLoginService } from '../services/login/admin/admin-login.service';
+import { UserService } from '../services/user/user.service';
+import { Observable } from 'rxjs';
+import { IUser } from '../models/user';
 
 @Component({
   selector: 'app-login',
@@ -8,14 +13,26 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  returnUrl: string;
+  loginError: string = '';
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private adminLoginService: AdminLoginService,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
+    if (this.adminLoginService.isLoggedIn()) {
+      this.router.navigate(['dashboard']);
+    }
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
     });
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   get username() {
@@ -26,5 +43,22 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
-  onSubmit() {}
+  onSubmit() {
+    if (this.loginForm.valid) {
+      const { username, password } = this.loginForm.value;
+      this.userService
+        .getUserByUsername(username)
+        .subscribe((userList: any[]) => {
+          const user = userList[0];
+          if (!user) {
+            this.loginError = 'No user exist for username';
+          } else if (user.password !== password) {
+            this.loginError = 'Incorrect username password';
+          } else {
+            this.router.navigate([this.returnUrl]);
+            localStorage.setItem('loggedInUser', this.loginForm.value.username);
+          }
+        });
+    }
+  }
 }
