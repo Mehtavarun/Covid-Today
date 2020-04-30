@@ -24,9 +24,9 @@ import { LoaderInterceptor } from './shared/http-intercepters/loader.intercepter
 import { ErrorHandlerInterceptor } from './shared/http-intercepters/error-handler.intercepter';
 import { CityDetailsComponent } from './city-details/city-details.component';
 import { NewsListComponent } from './news-list/news-list.component';
+import { TextLength } from './shared/pipes/text-length.pipe';
 
 const webApiConfig = {
-  delay: 500,
   passThruUnknownUrl: true
 };
 
@@ -43,7 +43,8 @@ const webApiConfig = {
     NotFoundComponent,
     LoaderComponent,
     CityDetailsComponent,
-    NewsListComponent
+    NewsListComponent,
+    TextLength
   ],
   imports: [
     BrowserModule,

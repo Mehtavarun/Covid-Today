@@ -8,12 +8,15 @@
     <h4 class="card-header">{{ news.newsTitle }}</h4>
     <div class="card-body">
       <h5 class="card-title  text-dark">{{ news.summary }}</h5>
-      <p class="card-text">{{ news.description }}</p>
+
       <ng-template
         class="card-text"
         *ngIf="showFullNews[i]; then collapseBtn; else expandBtn"
       ></ng-template>
       <ng-template #expandBtn>
+        <p class="card-text">
+          <b>Summary: </b>{{ news.description | textLength }}
+        </p>
         <button
           type="button"
           class="btn btn-outline-info btn-lg btn-block"
@@ -23,9 +26,8 @@
         </button>
       </ng-template>
       <ng-template #collapseBtn>
-        <p class="card-text">
-          {{ news.fullNews }}
-        </p>
+        <p class="card-text">{{ news.description }}</p>
+        <p class="card-text"><b>Full News: </b>{{ news.fullNews }}</p>
         <button
           type="button"
           class="btn btn-outline-info btn-lg btn-block"
