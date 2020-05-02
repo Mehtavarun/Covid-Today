@@ -6,23 +6,29 @@ import {
   HttpRequest
 } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { finalize, catchError } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
-  constructor(public loaderService: LoaderService) {}
+  constructor(
+    public loaderService: LoaderService,
+    private toastrService: ToastrService
+  ) {}
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(catchError((error, caught) => {
       if (error.error instanceof ErrorEvent) {
-        console.error('An error occurred:', error.error.message);
+        this.toastrService.error('Some error occured', 'Error Occured', {
+          timeOut: 3000
+        });
       } else {
-        console.error(
-          `Backend returned code ${error.status}, body was: ${error.error}`
-        );
+        this.toastrService.error("Server isn't responding", 'Server Error', {
+          timeOut: 3000
+        });
       }
       return of(error);
     }) as any);
