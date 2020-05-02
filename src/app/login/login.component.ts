@@ -26,6 +26,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.adminLoginService.isLoggedIn()) {
+      this.storageService.setItem(
+        'loggedInUser',
+        localStorage.getItem('loggedInUser')
+      );
       this.router.navigate(['dashboard']);
     }
     this.loginForm = this.fb.group({
@@ -55,11 +59,8 @@ export class LoginComponent implements OnInit {
           } else if (user.password !== password) {
             this.loginError = 'Incorrect username password';
           } else {
-            this.storageService.setItem(
-              'loggedInUser',
-              this.loginForm.value.username
-            );
-            this.router.navigate([this.returnUrl]);
+            this.storageService.setItem('loggedInUser', username);
+            this.router.navigate([decodeURIComponent(this.returnUrl)]);
           }
         });
     }

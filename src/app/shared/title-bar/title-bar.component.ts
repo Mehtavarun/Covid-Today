@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminLoginService } from '../../services/login/admin/admin-login.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-title-bar',
@@ -9,9 +10,11 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 })
 export class TitleBarComponent implements OnInit {
   isLoggedIn: boolean;
+
   constructor(
     private adminLoginService: AdminLoginService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {

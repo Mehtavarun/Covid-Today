@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NewsService } from '../services/news/news.service';
 import { INews } from '../models/news';
 import { Router } from '@angular/router';
+import { AdminLoginService } from '../services/login/admin/admin-login.service';
+import { StorageService } from '../services/storage/storage.service';
 
 @Component({
   selector: 'app-add-news',
@@ -17,7 +19,9 @@ export class AddNewsComponent implements OnInit {
     private toastr: ToastrService,
     private fb: FormBuilder,
     private newService: NewsService,
-    private router: Router
+    private router: Router,
+    private adminLoginService: AdminLoginService,
+    private storageService: StorageService
   ) {}
 
   ngOnInit(): void {
@@ -44,22 +48,29 @@ export class AddNewsComponent implements OnInit {
   }
 
   addNews() {
-    if (this.addNewsForm.valid) {
-      const {
-        newsTitle,
-        summary,
-        description,
-        fullNews
-      } = this.addNewsForm.value;
-      const news: INews = {
-        id: null,
-        newsTitle,
-        summary,
-        description,
-        fullNews
-      };
-      this.newService.saveNews(news).subscribe(() => {
-        this.showSuccessToastr();
+    if (this.adminLoginService.isLoggedIn()) {
+      if (this.addNewsForm.valid) {
+        const {
+          newsTitle,
+          summary,
+          description,
+          fullNews
+        } = this.addNewsForm.value;
+        const news: INews = {
+          id: null,
+          newsTitle,
+          summary,
+          description,
+          fullNews
+        };
+        this.newService.saveNews(news).subscribe(() => {
+          this.showSuccessToastr();
+        });
+      }
+    } else {
+      this.storageService.removeItem('loggedInUser');
+      this.router.navigate(['login'], {
+        queryParams: { returnUrl: '/news/add' }
       });
     }
   }
