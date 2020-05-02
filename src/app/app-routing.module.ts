@@ -1,14 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { PrecautionsComponent } from './precautions/precautions.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { LogoutComponent } from './logout/logout.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LatestNewsComponent } from './latest-news/latest-news.component';
 import { AddNewsComponent } from './add-news/add-news.component';
 import { AuthGuardService } from './services/auth-guard/auth-guard.service';
-import { CityDetailsComponent } from './city-details/city-details.component';
 import { NewsListComponent } from './news-list/news-list.component';
 
 const routes: Routes = [
@@ -29,18 +26,23 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
+    loadChildren: () =>
+      import('./dashboard/dashboard.module').then(m => m.DashboardModule)
   },
   {
     path: 'state/:state',
-    component: CityDetailsComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
+    loadChildren: () =>
+      import('./city-details/city-details.module').then(
+        m => m.CityDetailsModule
+      )
   },
   {
     path: 'precautions',
-    component: PrecautionsComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
+    loadChildren: () =>
+      import('./precautions/precaution.module').then(m => m.PrecautionModule)
   },
   {
     path: 'news',

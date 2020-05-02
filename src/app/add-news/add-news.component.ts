@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl
+} from '@angular/forms';
 import { NewsService } from '../services/news/news.service';
 import { INews } from '../models/news';
 import { Router } from '@angular/router';
@@ -26,11 +31,31 @@ export class AddNewsComponent implements OnInit {
 
   ngOnInit(): void {
     this.addNewsForm = this.fb.group({
-      newsTitle: ['', [Validators.required, Validators.maxLength(15)]],
-      summary: ['', Validators.maxLength(40)],
-      description: ['', [Validators.required, Validators.maxLength(150)]],
+      newsTitle: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(15),
+          this.noWhitespaceValidator
+        ]
+      ],
+      summary: ['', [Validators.maxLength(40), this.noWhitespaceValidator]],
+      description: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(150),
+          this.noWhitespaceValidator
+        ]
+      ],
       fullNews: ['']
     });
+  }
+
+  public noWhitespaceValidator(control: FormControl) {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    return isValid ? null : { whitespace: true };
   }
 
   get formControls() {
@@ -68,7 +93,6 @@ export class AddNewsComponent implements OnInit {
         });
       }
     } else {
-      this.storageService.removeItem('loggedInUser');
       this.router.navigate(['login'], {
         queryParams: { returnUrl: '/news/add' }
       });

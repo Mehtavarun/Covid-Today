@@ -12,7 +12,7 @@
             placeholder="Title"
             name="newsTitle"
             value=""
-            autofocus
+            autofocus="true"
             aria-describedby="newsTitleErr"
             required
           />
@@ -28,15 +28,18 @@
             <small
               id="newsTitleErr"
               class="form-text text-warning"
-              *ngIf="formControls.newsTitle.errors.required"
+              *ngIf="
+                formControls.newsTitle.errors.required ||
+                formControls.newsTitle.hasError('whitespace')
+              "
               >*Required</small
             ><small
               id="newsTitleErr"
               class="form-text text-warning"
               *ngIf="formControls.newsTitle.errors.maxlength"
               >Title cannot be more than 15 characters</small
-            ></ng-template
-          >
+            >
+          </ng-template>
         </div>
         <div class="form-group">
           <input
@@ -82,7 +85,10 @@
             <small
               id="descriptionErr"
               class="form-text text-warning"
-              *ngIf="formControls.description.errors.required"
+              *ngIf="
+                formControls.description.errors.required ||
+                formControls.description.hasError('whitespace')
+              "
               >*Required description</small
             ><small
               id="descriptionErr"

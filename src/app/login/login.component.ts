@@ -31,6 +31,8 @@ export class LoginComponent implements OnInit {
         localStorage.getItem('loggedInUser')
       );
       this.router.navigate(['dashboard']);
+    } else {
+      this.storageService.removeItem('loggedInUser');
     }
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
