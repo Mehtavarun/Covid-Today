@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: covid-today
+  labels:
+    app: covid-today
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: covid-today
+  template:
+    metadata:
+      labels:
+        app: covid-today
+    spec:
+      containers:
+      - name: covid-today
+        image: mvarun96/covid-today:v1

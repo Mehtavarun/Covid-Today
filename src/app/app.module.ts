@@ -25,6 +25,7 @@ import { ErrorHandlerInterceptor } from './shared/http-intercepters/error-handle
 import { CityDetailsComponent } from './city-details/city-details.component';
 import { NewsListComponent } from './news-list/news-list.component';
 import { TextLength } from './shared/pipes/text-length.pipe';
+import { TitlebarModule } from './shared/title-bar/titlebar.module';
 
 const webApiConfig = {
   passThruUnknownUrl: true
@@ -35,7 +36,7 @@ const webApiConfig = {
     AppComponent,
     LoginComponent,
     LogoutComponent,
-    TitleBarComponent,
+    // TitleBarComponent,
     DashboardComponent,
     LatestNewsComponent,
     PrecautionsComponent,
@@ -53,6 +54,7 @@ const webApiConfig = {
     BrowserAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    TitlebarModule,
     InMemoryWebApiModule.forRoot(DataService, webApiConfig)
   ],
   providers: [

@@ -3,8 +3,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminLoginService } from '../services/login/admin/admin-login.service';
 import { UserService } from '../services/user/user.service';
-import { Observable } from 'rxjs';
-import { IUser } from '../models/user';
+import { StorageService } from '../services/storage/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +20,8 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private adminLoginService: AdminLoginService,
-    private userService: UserService
+    private userService: UserService,
+    private storageService: StorageService
   ) {}
 
   ngOnInit(): void {
@@ -55,8 +55,11 @@ export class LoginComponent implements OnInit {
           } else if (user.password !== password) {
             this.loginError = 'Incorrect username password';
           } else {
+            this.storageService.setItem(
+              'loggedInUser',
+              this.loginForm.value.username
+            );
             this.router.navigate([this.returnUrl]);
-            localStorage.setItem('loggedInUser', this.loginForm.value.username);
           }
         });
     }
