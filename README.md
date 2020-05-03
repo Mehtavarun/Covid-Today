@@ -1,10 +1,13 @@
 # CovidToday
+Covid-Today is an App developed to monitor the covid cases around India. This project was developed using Angular, [Bootstrap](https://github.com/twbs/bootstrap). This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.0.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.0.
+## Live Demo
+`http://covidtoday.surge.sh`
 
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Setting up
+1. Clone the repo. <br>
+2. run `npm install`
+3. Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
 ## Code scaffolding
 
